@@ -1,0 +1,70 @@
+# SimpleRAG Profiles Configuration
+# Switch active profile per section to change provider/strategy.
+# Use ${ENV_VAR} for secrets — resolved from environment at load time.
+
+embeddings:
+  active: dev_local
+  profiles:
+    dev_local:
+      provider: local_hf
+      model: BAAI/bge-m3
+      normalize: true
+      batch_size: 16
+      device: cpu          # cpu | mps
+    corp_service:
+      provider: remote_openai_compatible
+      base_url: ${EMBEDDINGS_BASE_URL}
+      api_key: ${EMBEDDINGS_API_KEY}
+      model: corp-embedding-v1
+      dim: 1024
+      normalize: true
+      timeout_s: 10
+      batch_size: 128
+
+vector_stores:
+  active: local_pgvector
+  profiles:
+    local_pgvector:
+      provider: pgvector
+      dsn: ${PG_DSN}
+      default_metric: cosine
+    local_qdrant:
+      provider: qdrant
+      url: http://localhost:6333
+      api_key: ${QDRANT_API_KEY}
+      default_metric: cosine
+
+retrieval:
+  active: hybrid_default
+  profiles:
+    dense_only:
+      strategy: dense
+      dense_topk: 200
+    sparse_only:
+      strategy: sparse
+      sparse_topk: 200
+    hybrid_default:
+      strategy: hybrid
+      dense_topk: 200
+      sparse_topk: 200
+      fusion: rrf
+      rrf_k: 60
+      topn: 20
+
+rerank:
+  active: local_dev
+  profiles:
+    local_dev:
+      provider: local_cross_encoder
+      model: BAAI/bge-reranker-base
+      batch_size: 8
+      max_input_chars: 600
+      timeout_s: 5
+      device: cpu
+    corp_service:
+      provider: remote
+      url: ${RERANK_URL}
+      api_key: ${RERANK_API_KEY}
+      timeout_ms: 800
+      batch_size: 64
+      on_timeout: fallback_to_unreranked

@@ -1,0 +1,216 @@
+<mxfile host="app.diagrams.net" modified="2026-02-10T00:00:00.000Z" agent="cursor" version="24.7.9" type="device">
+  <diagram id="simple-rag-arch" name="SimpleRAG 架构">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Nodes -->
+        <mxCell id="ui" value="Web UI&#10;（配置/数据/测试台）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="190" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="query_api" value="Query API&#10;（在线检索/问答）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="280" y="110" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="control_plane" value="Control Plane API&#10;（配置/实验/数据管理）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="280" y="250" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="queue" value="任务队列/调度器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="580" y="250" width="170" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="worker" value="Worker&#10;（解析/切分/Embedding/建索引）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="790" y="250" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="postgres" value="Postgres&#10;（配置/元数据/实验）&#10;可选：pgvector" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#fff4cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="580" y="420" width="190" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="obj" value="对象存储&#10;（原文/解析产物）" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#fff4cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="420" width="190" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vector_store" value="Vector Store&#10;（可插拔）&#10;pgvector / Qdrant / Milvus" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#fff4cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="420" width="220" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="embedder" value="Embedding Provider&#10;本地开源模型 / 公司服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="580" y="30" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rerank" value="Rerank Provider（可选）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="860" y="30" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="llm" value="LLM Provider（可选）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="30" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e_ui_cp" value="" style="endArrow=block;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="ui" target="control_plane">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ui_query" value="" style="endArrow=block;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="ui" target="query_api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cp_pg" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="control_plane" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cp_queue" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="control_plane" target="queue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_queue_worker" value="" style="endArrow=block;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="queue" target="worker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_worker_pg" value="" style="endArrow=block;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="worker" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_worker_obj" value="" style="endArrow=block;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="worker" target="obj">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_worker_vs" value="" style="endArrow=block;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="worker" target="vector_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_worker_embed" value="" style="endArrow=block;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="worker" target="embedder">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_query_embed" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="query_api" target="embedder">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_query_vs" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="query_api" target="vector_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_query_pg" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="query_api" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_query_rerank" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="query_api" target="rerank">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_query_llm" value="" style="endArrow=block;html=1;strokeColor=#82b366;" edge="1" parent="1" source="query_api" target="llm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="simple-rag-structure" name="文件结构 &amp; 类图">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- File structure (left) -->
+        <mxCell id="fs_title" value="建议项目结构（可随阶段演进）" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="420" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs_root" value="simple-rag/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="420" height="520" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs_docs" value="docs/&#10;- SimpleRAG架构设计.md&#10;- SimpleRAG架构图.drawio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="360" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs_src" value="src/&#10;（核心业务代码）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="220" width="360" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs_src_sub" value="src/（建议子模块）&#10;- ingest/（解析/清洗）&#10;- chunking/（切分策略）&#10;- embeddings/（多模型）&#10;- vectorstores/（多向量库）&#10;- retrieval/（dense/sparse/hybrid）&#10;- rerank/（可选）&#10;- prompting/（上下文组装）&#10;- web/（控制面API/页面）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="320" width="360" height="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs_cfg" value="configs/&#10;- profiles.yaml（Embedding/VectorStore/Retrieval/Rerank）&#10;- env.example" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="540" width="360" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Class diagram (right) -->
+        <mxCell id="cd_title" value="核心类/接口关系（面向可插拔 Profiles）" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="30" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_profile" value="ProfileRegistry&#10;----------------&#10;+ getEmbedding(profileId)&#10;+ getVectorStore(profileId)&#10;+ getRetrieval(profileId)&#10;+ fingerprint()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="iface_embedder" value="&lt;&lt;interface&gt;&gt;&#10;Embedder&#10;----------------&#10;+ embed(texts[]) -&gt; vectors[]&#10;+ dim()&#10;+ modelId()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="80" width="240" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="iface_vs" value="&lt;&lt;interface&gt;&gt;&#10;VectorStore&#10;----------------&#10;+ upsert(points)&#10;+ query(vector, topK, filter)&#10;+ delete(ids|filter)&#10;+ ensureIndex(spec)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="80" width="280" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_retrieval" value="&lt;&lt;interface&gt;&gt;&#10;Retriever&#10;----------------&#10;+ retrieve(query, profile) -&gt; candidates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="520" y="260" width="260" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_dense" value="DenseRetriever&#10;（向量召回）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="250" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_sparse" value="SparseRetriever&#10;（BM25 / ES）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="250" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_hybrid" value="HybridRetriever&#10;（融合：RRF/加权）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="250" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_rerank" value="RerankProvider（可选）&#10;----------------&#10;+ rerank(query, candidates) -&gt; ranked" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="360" width="260" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_querysvc" value="QueryService&#10;----------------&#10;+ search(query, profiles)&#10;+ explain(runId)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="520" y="380" width="260" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cls_ingest" value="IngestService/Worker&#10;----------------&#10;+ parse()&#10;+ chunk()&#10;+ embed()&#10;+ index()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="360" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e_qs_pr" value="uses" style="endArrow=block;endFill=1;html=1;strokeColor=#82b366;" edge="1" parent="1" source="cls_querysvc" target="cls_profile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_qs_ret" value="calls" style="endArrow=block;endFill=1;html=1;strokeColor=#82b366;" edge="1" parent="1" source="cls_querysvc" target="cls_retrieval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ret_dense" value="implements" style="endArrow=block;endFill=0;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_dense" target="cls_retrieval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ret_sparse" value="implements" style="endArrow=block;endFill=0;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_sparse" target="cls_retrieval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ret_hybrid" value="implements" style="endArrow=block;endFill=0;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_hybrid" target="cls_retrieval">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dense_embed" value="uses" style="endArrow=block;endFill=1;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_dense" target="iface_embedder">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dense_vs" value="uses" style="endArrow=block;endFill=1;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_dense" target="iface_vs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hybrid_dense" value="calls" style="endArrow=block;endFill=1;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_hybrid" target="cls_dense">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hybrid_sparse" value="calls" style="endArrow=block;endFill=1;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="cls_hybrid" target="cls_sparse">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_qs_rerank" value="optional" style="endArrow=block;endFill=1;html=1;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="cls_querysvc" target="cls_rerank">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ingest_embed" value="uses" style="endArrow=block;endFill=1;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="cls_ingest" target="iface_embedder">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ingest_vs" value="uses" style="endArrow=block;endFill=1;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="cls_ingest" target="iface_vs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
