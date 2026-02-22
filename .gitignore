@@ -1,0 +1,22 @@
+# Python build / install metadata
+*.egg-info/
+
+# Python bytecode caches
+**/__pycache__/
+*.py[cod]
+
+# Common Python tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Common build outputs / virtualenvs
+build/
+dist/
+.venv/
+venv/
+
+# Project-specific (explicit, for clarity)
+backend/simple_rag.egg-info/
+/backend/simple_rag/data/
+.idea

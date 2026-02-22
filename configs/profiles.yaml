@@ -7,7 +7,7 @@ embeddings:
   profiles:
     dev_local:
       provider: local_hf
-      model: BAAI/bge-m3
+      model: BAAI/bge-small-zh-v1.5
       normalize: true
       batch_size: 16
       device: cpu          # cpu | mps

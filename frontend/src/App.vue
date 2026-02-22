@@ -18,15 +18,56 @@
 </script>
 
 <style scoped>
-#layout { display: flex; min-height: 100vh; }
+#layout {
+  display: flex;
+  min-height: 100vh;
+}
+
 .sidebar {
-  width: 200px; background: #1e1e2e; color: #cdd6f4; padding: 24px 16px;
-  display: flex; flex-direction: column; gap: 8px;
+  width: 220px;
+  min-width: 220px;
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid rgba(15, 23, 42, 0.5);
+  box-shadow: 2px 0 16px rgba(2, 6, 23, 0.15);
 }
-.brand { font-size: 18px; font-weight: bold; margin-bottom: 24px; color: #89b4fa; }
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #60a5fa;
+  letter-spacing: -0.3px;
+}
+
 .sidebar a {
-  color: #a6adc8; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
 }
-.sidebar a:hover, .sidebar a.router-link-active { background: #313244; color: #cdd6f4; }
-.content { flex: 1; padding: 0; background: #fff; }
+
+.sidebar a:hover {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.sidebar a.router-link-active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 0;
+  background: #f8fafc;
+  overflow-y: auto;
+}
 </style>
